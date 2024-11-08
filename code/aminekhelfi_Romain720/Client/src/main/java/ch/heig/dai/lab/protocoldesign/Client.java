@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    final String SERVER_ADDRESS = "localhost";
+    final String SERVER_ADDRESS = "192.168.105.43";//IP pc serveur
     final int SERVER_PORT = 5000;
 
     public static void main(String[] args) {

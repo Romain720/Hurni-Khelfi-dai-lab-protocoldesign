@@ -1,8 +1,10 @@
+package ch.heig.dai.lab.protocoldesign;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 
 public class Server {
     final int SERVER_PORT = 5000;
@@ -22,11 +24,19 @@ public class Server {
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                      PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-                    String request = in.readLine();
-                    if (request != null) {
-                        String response = handleRequest(request);
-                        out.println(response);
+                    String request;
+                    while ((request = in.readLine()) != null) {
+                        if (request != null) {
+                            String response = handleRequest(request);
+                            out.println(response);
+                            out.flush();
+                        } else {
+                            out.println("ligne null mon gars");
+                            out.flush();
+                        }
                     }
+
+
                 } catch (Exception e) {
                     System.err.println("Error handling client connection: " + e.getMessage());
                 }
@@ -34,6 +44,9 @@ public class Server {
         } catch (Exception e) {
             System.err.println("Server error: " + e.getMessage());
         }
+
+
+
     }
 
     private String handleRequest(String request) {
